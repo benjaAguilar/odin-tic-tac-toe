@@ -3,11 +3,18 @@ let game = (function(){
     let playerTurn;
 
     let gameFlow = {
-        gameBoard: [[[0], [0], [0]],
-                    [[0], [0], [0]],
-                    [[0], [0], [0]]],
+        gameBoard: [[0, 0, 0],
+                    [0, 0, 0],
+                    [0, 0, 0]],
         playerOne: {},
         playerTwo: {},
+    }
+
+    let threeInRow = {
+        row: [[], [], []],
+        column: [[], [], []],
+        diagonal: [],
+        reverseDiagonal: []   
     }
 
     //Create the players
@@ -57,43 +64,51 @@ let game = (function(){
     //Checks if there are a 3 in a row or a tie
     function checkGameboard(){
 
+        let diagonalIndex = 0;
+        let reverseIndex = 2;
+        
         for(let i = 0; i <= 2; i++){
+
             //row search
             gameFlow.gameBoard[i].forEach((row) => {
                 console.log(row)
+                threeInRow.row[i].push(row);
             });
             
             //column search
             gameFlow.gameBoard.forEach((column) => {
                 console.log(column[i]);
+                threeInRow.column[i].push(column[i]);
             });
 
             //diagonal search
             gameFlow.gameBoard.forEach((diagonal) => {
-                if(indexOf(diagonal) === 0){
-                    console.log(diagonal[0]);
+                console.log(diagonal[diagonalIndex]);
+                threeInRow.diagonal.push(diagonal[diagonalIndex])
 
-                } else if(indexOf(diagonal === 1)){
-                    console.log(diagonal[1]);
-
-                } else{
-                    console.log(diagonal[2]);
-                    
-                }
+                diagonalIndex++;
             });
 
+            gameFlow.gameBoard.forEach((diagonal) => {
+                console.log(diagonal[reverseIndex]);
+                threeInRow.reverseDiagonal.push(diagonal[reverseIndex]);
+
+                reverseIndex--;
+            });
             
         }
+        console.log(threeInRow);
         
     }
 
     function addMark(x, y){
-        let markValue = gameFlow.gameBoard[y][x][0];
+        let markValue = gameFlow.gameBoard[y][x];
 
         if(markValue === 0){
             gameFlow.gameBoard[y][x] = playerTurn.mark;
 
             console.table(gameFlow.gameBoard);
+            console.log(gameFlow.gameBoard);
             toggleTurn();
             checkGameboard();
 
@@ -107,6 +122,7 @@ let game = (function(){
     gameFlow.playerOne = addPlayer("playerOne");
     gameFlow.playerTwo = addPlayer("playerTwo");
     toggleTurn();
+    console.log(threeInRow);
     
     return{
         addMark: addMark,
