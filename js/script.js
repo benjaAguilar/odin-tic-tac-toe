@@ -55,13 +55,27 @@ let game = (function(){
     }
 
     function addMark(x, y){
-        console.log(playerTurn.mark);
+        let markValue = gameFlow.gameBoard[y][x][0];
+
+        if(markValue === 0){
+            gameFlow.gameBoard[y][x] = playerTurn.mark;
+
+            console.table(gameFlow.gameBoard);
+            toggleTurn();
+
+        } else{
+            console.error("That place its already taken");
+
+        }  
 
     }
 
     gameFlow.playerOne = addPlayer("playerOne");
     gameFlow.playerTwo = addPlayer("playerTwo");
     toggleTurn();
-    addMark();
+
+    return{
+        addMark: addMark,
+    }
 
 })();
