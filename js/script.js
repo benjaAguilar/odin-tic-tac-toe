@@ -1,6 +1,7 @@
 let game = (function(){
 
     let playerTurn;
+    let playerMark;
 
     let gameFlow = {
         gameBoard: [[0, 0, 0],
@@ -61,14 +62,27 @@ let game = (function(){
         }
     }
 
+    function endGame(){
+        if(playerMark === gameFlow.playerOne.mark){
+            console.log(gameFlow.playerOne.name + "WON!");
+
+        } else if(playerMark === gameFlow.playerTwo.mark){
+            console.log(gameFlow.playerTwo.name + "WON!");
+
+        }
+
+        gameFlow.gameBoard = [[1, 1, 1],
+                              [1, 1, 1],
+                              [1, 1, 1]];
+    }
+
     function checkRow(mark, i, arr){
-        let playerMark;
         
         if(mark === gameFlow.playerOne.mark){
-            playerMark = gameFlow.playerOne.mark;
+            arr.indexOf(gameFlow.playerTwo.mark) != -1 ? playerMark = "" : playerMark = gameFlow.playerOne.mark; 
 
         } else if(mark === gameFlow.playerTwo.mark){
-            playerMark = gameFlow.playerTwo.mark;
+            arr.indexOf(gameFlow.playerOne.mark) != -1 ? playerMark = "" : playerMark = gameFlow.playerTwo.mark; 
 
         }
 
@@ -95,8 +109,12 @@ let game = (function(){
 
             });
 
-            console.log(threeInRow.row.every(checkRow));
-            threeInRow.column.every(checkRow);
+            playerMark = "";
+
+            if(threeInRow.row.every(checkRow) || threeInRow.column.every(checkRow)){
+                endGame();
+
+            }
 
             threeInRow.row = [];
             threeInRow.column = [];
@@ -115,11 +133,13 @@ let game = (function(){
             reverseIndex--;
         });
 
+        if(threeInRow.diagonal.every(checkRow) || threeInRow.reverseDiagonal.every(checkRow)){
+            endGame();
+            
+        }
+
         threeInRow.diagonal = [];
-        threeInRow.reverseDiagonal = [];
-        
-        
-        
+        threeInRow.reverseDiagonal = [];    
     }
 
     function addMark(x, y){
