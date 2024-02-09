@@ -11,8 +11,8 @@ let game = (function(){
     }
 
     let threeInRow = {
-        row: [[], [], []],
-        column: [[], [], []],
+        row: [],
+        column: [],
         diagonal: [],
         reverseDiagonal: []   
     }
@@ -61,6 +61,20 @@ let game = (function(){
         }
     }
 
+    function checkRow(mark, i, arr){
+        let playerMark;
+        
+        if(mark === gameFlow.playerOne.mark){
+            playerMark = gameFlow.playerOne.mark;
+
+        } else if(mark === gameFlow.playerTwo.mark){
+            playerMark = gameFlow.playerTwo.mark;
+
+        }
+
+        return mark === playerMark
+    }
+
     //Checks if there are a 3 in a row or a tie
     function checkGameboard(){
 
@@ -71,33 +85,40 @@ let game = (function(){
 
             //row search
             gameFlow.gameBoard[i].forEach((row) => {
-                console.log(row)
-                threeInRow.row[i].push(row);
+                threeInRow.row.push(row);
+                
             });
             
             //column search
             gameFlow.gameBoard.forEach((column) => {
-                console.log(column[i]);
-                threeInRow.column[i].push(column[i]);
+                threeInRow.column.push(column[i]);
+
             });
 
-            //diagonal search
-            gameFlow.gameBoard.forEach((diagonal) => {
-                console.log(diagonal[diagonalIndex]);
-                threeInRow.diagonal.push(diagonal[diagonalIndex])
+            console.log(threeInRow.row.every(checkRow));
+            threeInRow.column.every(checkRow);
 
-                diagonalIndex++;
-            });
-
-            gameFlow.gameBoard.forEach((diagonal) => {
-                console.log(diagonal[reverseIndex]);
-                threeInRow.reverseDiagonal.push(diagonal[reverseIndex]);
-
-                reverseIndex--;
-            });
-            
+            threeInRow.row = [];
+            threeInRow.column = [];
         }
-        console.log(threeInRow);
+
+        //diagonal search
+        gameFlow.gameBoard.forEach((diagonal) => {
+            threeInRow.diagonal.push(diagonal[diagonalIndex])
+
+            diagonalIndex++;
+        });
+
+        gameFlow.gameBoard.forEach((diagonal) => {
+            threeInRow.reverseDiagonal.push(diagonal[reverseIndex]);
+
+            reverseIndex--;
+        });
+
+        threeInRow.diagonal = [];
+        threeInRow.reverseDiagonal = [];
+        
+        
         
     }
 
@@ -126,6 +147,7 @@ let game = (function(){
     
     return{
         addMark: addMark,
+        threeInRow: threeInRow,
     }
 
 })();
