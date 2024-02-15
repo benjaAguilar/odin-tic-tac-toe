@@ -22,10 +22,15 @@ h1{
 }
 
 .block{
-    width: 200px;
-    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    padding: 1rem;
     background-color: gray;
     border-radius: 1rem;
+    font-size: 150px;
     box-shadow: inset 0px 0px 5px black;
 }
 
