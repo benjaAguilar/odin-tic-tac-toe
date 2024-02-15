@@ -2,6 +2,7 @@ let game = (function(){
 
     let playerTurn;
     let playerMark;
+    let someoneWon = false;
 
     let gameFlow = {
         gameBoard: [[0, 0, 0],
@@ -63,7 +64,10 @@ let game = (function(){
     }
 
     function endGame(){
-        if(playerMark === gameFlow.playerOne.mark){
+        if(someoneWon === false){
+            console.log("ITS A TIE!");
+
+        } else if(playerMark === gameFlow.playerOne.mark){
             console.log(gameFlow.playerOne.name + "WON!");
 
         } else if(playerMark === gameFlow.playerTwo.mark){
@@ -116,6 +120,7 @@ let game = (function(){
             playerMark = "";
 
             if(threeInRow.row.every(checkRow) || threeInRow.column.every(checkRow)){
+                someoneWon = true;
                 endGame();
 
             }
@@ -138,6 +143,7 @@ let game = (function(){
         });
 
         if(threeInRow.diagonal.every(checkRow) || threeInRow.reverseDiagonal.every(checkRow)){
+            someoneWon = true
             endGame();
             
         }
@@ -146,7 +152,7 @@ let game = (function(){
         threeInRow.reverseDiagonal = [];
         
         if(gameFlow.gameBoard[0].every(checkTie) && gameFlow.gameBoard[1].every(checkTie) && gameFlow.gameBoard[2].every(checkTie)){
-            console.warn("ITS A TIE!");
+            endGame();
 
         }
     }
