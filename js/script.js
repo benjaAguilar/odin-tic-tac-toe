@@ -89,6 +89,10 @@ let game = (function(){
         return mark === playerMark
     }
 
+    function checkTie(mark, i, arr){
+        return mark != 0
+    }
+
     //Checks if there are a 3 in a row or a tie
     function checkGameboard(){
 
@@ -139,7 +143,12 @@ let game = (function(){
         }
 
         threeInRow.diagonal = [];
-        threeInRow.reverseDiagonal = [];    
+        threeInRow.reverseDiagonal = [];
+        
+        if(gameFlow.gameBoard[0].every(checkTie) && gameFlow.gameBoard[1].every(checkTie) && gameFlow.gameBoard[2].every(checkTie)){
+            console.warn("ITS A TIE!");
+
+        }
     }
 
     function addMark(x, y){
