@@ -1,0 +1,34 @@
+.content{
+    display: grid;
+    grid-template-rows: 50px 50px 1fr;
+    align-items: center;
+    justify-content: center;
+}
+
+h1{
+    text-align: center;
+}
+
+.player-turn{
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.gameboard{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.block{
+    width: 200px;
+    height: 200px;
+    background-color: gray;
+    border-radius: 1rem;
+    box-shadow: inset 0px 0px 5px black;
+}
+
+.block:hover{
+    cursor: pointer;
+}
