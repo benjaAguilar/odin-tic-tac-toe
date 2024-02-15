@@ -3,6 +3,9 @@ let game = (function(){
     let playerTurn;
     let playerMark;
     let someoneWon = false;
+    let x = 0;
+    let y = 0;
+    let id = 0;
 
     let gameFlow = {
         gameBoard: [[0, 0, 0],
@@ -18,6 +21,27 @@ let game = (function(){
         diagonal: [],
         reverseDiagonal: []   
     }
+
+    //DOM SELECTIONS
+    let blocks = document.querySelectorAll(".block");
+    let displayTurn = document.querySelector(".player-turn");
+    let resultsModal = document.querySelector(".results");
+    let restartBtn = document.querySelector(".restart");
+    
+    blocks.forEach((block) => {
+        let blockId = id;
+        let blockX = x;
+        let blockY = y;
+
+        block.addEventListener("click", function(){addMark(blockX, blockY, blockId)});
+        x++;
+        id++;
+
+        if(x > 2){
+            y++;
+            x = 0;
+        }
+    });
 
     //Create the players
     function addPlayer(defaultName){
@@ -51,6 +75,7 @@ let game = (function(){
 
             gameFlow.playerOne.hasPlayed = true;
             gameFlow.playerTwo.hasPlayed = false;
+            displayTurn.textContent = gameFlow.playerOne.name + " Turn!";
             console.warn(gameFlow.playerOne.name + " Turn!");
 
         } else{
@@ -58,6 +83,7 @@ let game = (function(){
 
             gameFlow.playerOne.hasPlayed = false;
             gameFlow.playerTwo.hasPlayed = true;
+            displayTurn.textContent = gameFlow.playerTwo.name + " Turn!";
             console.warn(gameFlow.playerTwo.name + " Turn!");
 
         }
@@ -65,15 +91,20 @@ let game = (function(){
 
     function endGame(){
         if(someoneWon === false){
+            document.querySelector("h2").textContent = "ITS A TIE!";
             console.log("ITS A TIE!");
 
         } else if(playerMark === gameFlow.playerOne.mark){
+            document.querySelector("h2").textContent = gameFlow.playerOne.name + " WON!";
             console.log(gameFlow.playerOne.name + "WON!");
 
         } else if(playerMark === gameFlow.playerTwo.mark){
+            document.querySelector("h2").textContent = gameFlow.playerTwo.name + " WON!";
             console.log(gameFlow.playerTwo.name + "WON!");
 
         }
+
+        resultsModal.showModal();
 
         gameFlow.gameBoard = [[1, 1, 1],
                               [1, 1, 1],
@@ -157,12 +188,13 @@ let game = (function(){
         }
     }
 
-    function addMark(x, y){
+    function addMark(x, y, id){
         let markValue = gameFlow.gameBoard[y][x];
 
         if(markValue === 0){
             gameFlow.gameBoard[y][x] = playerTurn.mark;
-
+            
+            document.getElementById(id).textContent = playerTurn.mark;
             console.table(gameFlow.gameBoard);
             console.log(gameFlow.gameBoard);
             toggleTurn();
@@ -178,7 +210,7 @@ let game = (function(){
     gameFlow.playerOne = addPlayer("playerOne");
     gameFlow.playerTwo = addPlayer("playerTwo");
     toggleTurn();
-    console.log(threeInRow);
+    console.log(gameFlow.gameBoard);
     
     return{
         addMark: addMark,
