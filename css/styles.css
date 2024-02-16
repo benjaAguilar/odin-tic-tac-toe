@@ -1,18 +1,31 @@
+body{
+    background-color: #F9B572;
+    color: #FAF8ED;
+    font-family: monospace;
+}
+
 .content{
     display: grid;
     grid-template-rows: 50px 50px 1fr;
     align-items: center;
     justify-content: center;
+    gap: 0.5rem;
 }
 
 h1{
     text-align: center;
+    color: #748E63;
+    font-weight: 900;
 }
 
 .player-turn{
     text-align: center;
     font-size: 1.2rem;
     font-weight: bold;
+    background-color: #748E63;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    box-shadow: inset 0px 0px 5px black;
 }
 
 .gameboard{
@@ -28,7 +41,7 @@ h1{
     width: 150px;
     height: 150px;
     padding: 1rem;
-    background-color: gray;
+    background-color: #748E63;
     border-radius: 1rem;
     font-size: 150px;
     box-shadow: inset 0px 0px 5px black;
