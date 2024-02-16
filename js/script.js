@@ -51,7 +51,7 @@ let game = (function(){
 
         if(gameFlow.playerOne.mark === undefined){
             mark = prompt("choose a mark! 1 = X, 2 = O");
-            mark === 2 ? mark = "O" : mark = "X";
+            mark === "2" ? mark = "O" : mark = "X";
 
         } else if(gameFlow.playerOne.mark === "X"){
             mark = "O";
@@ -75,7 +75,7 @@ let game = (function(){
 
             gameFlow.playerOne.hasPlayed = true;
             gameFlow.playerTwo.hasPlayed = false;
-            displayTurn.textContent = gameFlow.playerOne.name + " Turn!";
+            displayTurn.textContent = gameFlow.playerOne.name + " Turn! " + gameFlow.playerOne.mark;
             console.warn(gameFlow.playerOne.name + " Turn!");
 
         } else{
@@ -83,7 +83,7 @@ let game = (function(){
 
             gameFlow.playerOne.hasPlayed = false;
             gameFlow.playerTwo.hasPlayed = true;
-            displayTurn.textContent = gameFlow.playerTwo.name + " Turn!";
+            displayTurn.textContent = gameFlow.playerTwo.name + " Turn! " + gameFlow.playerTwo.mark;
             console.warn(gameFlow.playerTwo.name + " Turn!");
 
         }
@@ -206,6 +206,8 @@ let game = (function(){
         }  
 
     }
+
+    restartBtn.addEventListener("click", function(){location.reload()});
 
     gameFlow.playerOne = addPlayer("playerOne");
     gameFlow.playerTwo = addPlayer("playerTwo");
